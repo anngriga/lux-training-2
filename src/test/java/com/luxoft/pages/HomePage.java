@@ -19,6 +19,9 @@ public class HomePage extends BasePage {
     @FindBy(className = "two-links")
     private WebElement loginLink;
 
+    @FindBy(xpath = "//a[@class='header__control _callback']")
+    private WebElement contactsLetterIcon;
+
     @FindBy(xpath = "//ul[@class='navigation__list']")
     private WebElement mainMenu;
 
@@ -31,6 +34,16 @@ public class HomePage extends BasePage {
         loginMenu.click();
         loginLink.click();
         return new LoginForm(driver);
+    }
+
+    public PageWithRadioLikeButtons openContactsPage() {
+        contactsLetterIcon.click();
+        return new PageWithRadioLikeButtons(driver);
+    }
+
+    public PageWithRadioLikeButtons openSchedulePage() {
+        clickOnLinkWithText("Расписание");
+        return new PageWithRadioLikeButtons(driver);
     }
 
     /**
