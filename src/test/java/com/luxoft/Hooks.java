@@ -3,18 +3,24 @@ package com.luxoft;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 public class Hooks {
 
     public static final ThreadLocal<WebDriver> driver =
         ThreadLocal.withInitial(()->null);
+    public static final ThreadLocal<WebDriverWait> wait =
+        ThreadLocal.withInitial(()->null);
 
     public static void init() {
         if (driver.get() == null) {
             driver.set(createDriver());
+        }
+        // driver уже не null
+        if (wait.get() == null) {
+            wait.set(new WebDriverWait(driver.get(), Duration.ofSeconds(15)));
         }
     }
 

@@ -1,10 +1,8 @@
 package com.luxoft.pages;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.HashSet;
@@ -12,6 +10,8 @@ import java.util.List;
 import java.util.Set;
 
 public class HomePage extends BasePage {
+
+    private final WebDriverWait wait;
 
     @FindBy(xpath = "//div[@class='header__control _nav']/*[local-name() = 'svg'][1]")
     private WebElement loginMenu;
@@ -25,8 +25,9 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//ul[@class='navigation__list']")
     private WebElement mainMenu;
 
-    public HomePage(WebDriver driver) {
+    public HomePage(WebDriver driver, WebDriverWait wait) {
         super(driver);
+        this.wait = wait;
         PageFactory.initElements(driver, this);
     }
 
@@ -51,7 +52,7 @@ public class HomePage extends BasePage {
      */
     public CataloguePage openCataloguePage() {
         findLinkWithText("Каталог").click();
-        return new CataloguePage(driver);
+        return new CataloguePage(driver, wait);
     }
 
     /**
