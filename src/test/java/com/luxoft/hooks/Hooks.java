@@ -65,27 +65,27 @@ public class Hooks {
     }
 
     // Scenario hooks
-    @Before("ex1")
+    @Before("@ex1")
     public void hookEx1() {
         System.out.println("Before EX1 Hook");
     }
 
-    @Before("ex2")
+    @Before("@ex2")
     public void hookEx2() {
         System.out.println("Before EX2 Hook");
     }
 
-    @Before("ex3")
+    @Before("@ex3")
     public void hookEx3() {
         System.out.println("Before EX3 Hook");
     }
 
-    @After(value = "ex3", order = 1)
+    @After(value = "@ex3", order = 1)
     public void afterEx3FirstHook() {
         System.out.println("After EX3 First Hook");
     }
 
-    @After(value = "ex3", order = 2)
+    @After(value = "@ex3", order = 2)
     public void afterEx3SecondHook() {
         System.out.println("After EX3 Second Hook");
     }
