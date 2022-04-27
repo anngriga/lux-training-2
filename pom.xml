@@ -14,8 +14,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
     <junit.version>5.6.2</junit.version>
     <cucumber.version>7.3.2</cucumber.version>
     <aspectj.version>1.9.5</aspectj.version>
@@ -121,6 +121,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.22.1</version>
         <configuration>
+            <argLine>-Dfile.encoding=UTF-8</argLine>
             <forkCount>4</forkCount>
             <reuseForks>false</reuseForks>
             <parallel>classes</parallel>
@@ -191,7 +192,6 @@
               <param>**/cucumber*.json</param>
             </jsonFiles>
             <trendsLimit>0</trendsLimit>
-            <trendsFile>/tmp/cucumber-trends.json</trendsFile>
           </configuration>
         </execution>
       </executions>

@@ -1,66 +1,35 @@
 package com.luxoft.hooks;
 
 
-import io.cucumber.java.After;
-import io.cucumber.java.AfterAll;
-import io.cucumber.java.Before;
-import io.cucumber.java.BeforeAll;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
+import com.luxoft.DriverObject;
+import io.cucumber.java.*;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
 public class Hooks {
 
-    public static final ThreadLocal<WebDriver> driver =
-        ThreadLocal.withInitial(()->null);
-    public static final ThreadLocal<WebDriverWait> wait =
+    private static final ThreadLocal<DriverObject> driverObject =
         ThreadLocal.withInitial(()->null);
 
-    public static void initialize() {
-        if (driver.get() == null) {
-            driver.set(createDriver());
+    public static DriverObject getDriverObject() {
+        final DriverObject driverObj = driverObject.get();
+        if (driverObj == null) {
+            throw new IllegalStateException("Driver Object not initialized!");
         }
-        // driver уже не null
-        if (wait.get() == null) {
-            wait.set(new WebDriverWait(driver.get(), Duration.ofSeconds(15)));
-        }
-
-    }
-
-    public Hooks() {
-        System.out.println("In Hooks constructor!");
-    }
-
-    private static WebDriver createDriver(){
-
-        System.setProperty("webdriver.chrome.driver", "lib/chromedriver.exe");
-
-        final ChromeOptions options = new ChromeOptions();
-        options.setAcceptInsecureCerts(true);
-        options.setHeadless(false);
-
-        final WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        driver.manage().window().maximize();
-
-        return driver;
-
+        return driverObj;
     }
 
     @BeforeAll
     public static void beforeAll() {
-        Hooks.initialize();
+        driverObject.set(new DriverObject());
     }
 
     @AfterAll
     public static void afterAll() {
         System.out.println("Terminating...");
-        final WebDriver driver = Hooks.driver.get();
-        if (driver != null) {
-            driver.quit();
+        final DriverObject driverObj = Hooks.driverObject.get();
+        if (driverObj != null) {
+            driverObj.getDriver().quit();
         }
     }
 
@@ -88,6 +57,14 @@ public class Hooks {
     @After(value = "@ex3", order = 2)
     public void afterEx3SecondHook() {
         System.out.println("After EX3 Second Hook");
+    }
+
+    @After
+    public void makeScreenshot(Scenario scenario) {
+        if (scenario.isFailed()) {
+            final byte[] screenshot = ((TakesScreenshot) driverObject.get().getDriver()).getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenshot, "image/png", scenario.getName()); // ... and embed it in the report.
+        }
     }
 
 }

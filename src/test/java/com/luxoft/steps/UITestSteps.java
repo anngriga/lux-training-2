@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UITestSteps {
 
     // Driver & wait objects
-    private final WebDriver driver = Hooks.driver.get();
-    private final WebDriverWait wait = Hooks.wait.get();
+    private final WebDriver driver = Hooks.getDriverObject().getDriver();
+    private final WebDriverWait wait = Hooks.getDriverObject().getWait();
 
     // Pages
     private HomePage homePage;
