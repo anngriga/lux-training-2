@@ -1,6 +1,6 @@
 package com.luxoft.steps;
 
-import com.luxoft.Hooks;
+import com.luxoft.hooks.Hooks;
 import com.luxoft.pages.CataloguePage;
 import com.luxoft.pages.HomePage;
 import com.luxoft.pages.PageWithRadioLikeButtons;
@@ -8,7 +8,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;

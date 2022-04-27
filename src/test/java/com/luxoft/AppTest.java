@@ -2,15 +2,12 @@ package com.luxoft;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.WebDriver;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
     features = "src/test/java/com/luxoft/features",
-    glue = "com.luxoft.steps",
+    glue = {"com.luxoft.steps", "com.luxoft.hooks"},
     snippets = CucumberOptions.SnippetType.CAMELCASE,
     plugin = {
         "json:target/cucumber3.json",
@@ -19,19 +16,5 @@ import org.openqa.selenium.WebDriver;
     }
 )
 public class AppTest {
-
-
-    @BeforeClass
-    public static void setUp(){
-        Hooks.init();
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        final WebDriver driver = Hooks.driver.get();
-        if (driver != null) {
-            Hooks.driver.get().quit();
-        }
-    }
 
 }
